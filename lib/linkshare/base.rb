@@ -40,29 +40,21 @@ module Linkshare
         query.merge!({'cuserid' => credentials['user_id'], 'cpi' => credentials['pass']})
 
         results = []
-        total = 0
-
+        
         begin
-          begin
-            response = get(path, :query => query, :timeout => 30)
-          rescue Timeout::Error
-            nil
-          end
-debugger
-          cj_api = response['cj_api']
-          validate_response(cj_api)
+          response = get(path, :query => query, :timeout => 30)
+        rescue Timeout::Error
+          nil
+        end
 
-          #little bit of navigation here
-          total = cj_api.values.first.delete('total_matched').to_i
+        unless validate_response(response)
+          str = response.response.body + "1x1\t1234\tAdvertiser Y\t2163\t1/31/2002\t8:58\t32\t7.99\t1\t0.39\t2/1/2002\t12:46"
+          str.gsub!(" ", "_").downcase!
           
-          # cj_api is a hash containing a hash or return data, one element being the actual records we have
-          data = cj_api.values.first.reject{|k,v| %w{records_returned page_number}.include?(k)}.values.first
-          data = [data] unless data.nil? || data.is_a?(Array)
-          results = results.concat(data || [])
+          results = FasterCSV.parse(str, {:col_sep => "\t", :row_sep => "\n", :headers => true})
+        end
 
-        end while total > results.length
-
-        results.map{|r| self.new(r)}
+        results.map{|r| self.new(r.to_hash)}
       end # get
       
       def credentials
@@ -80,8 +72,7 @@ debugger
       end # credentails
       
       def validate_response(response)
-        error_message = response['error_message']
-        raise ArgumentError, error_message if error_message
+        raise ArgumentError, "There was an error connecting to LinkShare's reporting server." if response.response.body.include?("REPORTING ERROR")
       end
       
       def first(params)
