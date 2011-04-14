@@ -49,7 +49,7 @@ module Linkshare
 
         unless validate_response(response)
           str = response.response.body + "1x1\t1234\tAdvertiser Y\t2163\t1/31/2002\t8:58\t32\t7.99\t1\t0.39\t2/1/2002\t12:46"
-          str.gsub!(" ", "_").downcase!
+          str.gsub!(" ", "_").gsub!("($)", "").downcase!
           
           results = FasterCSV.parse(str, {:col_sep => "\t", :row_sep => "\n", :headers => true})
         end
