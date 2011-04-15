@@ -59,11 +59,11 @@ module Linkshare
       
       def credentials
         unless @@credentials && @@credentials.length > 0
-          # there is no offline or test mode for CJ - so I won't include any credentials in this gem
+          # there is no offline or test mode for LinkShare - so I won't include any credentials in this gem
           config_file = ["config/linkshare.yml", File.join(ENV['HOME'], '.linkshare.yaml')].select{|f| File.exist?(f)}.first
 
           unless File.exist?(config_file)
-            warn "Warning: config/linkshare.yaml does not exist. Put your CJ developer key and website ID in ~/.linkshare.yml to enable live testing."
+            warn "Warning: config/linkshare.yml does not exist. Put your LinkShare user_id and pass in ~/.linkshare.yml to enable live testing."
           else
             @@credentials = YAML.load(File.read(config_file))
           end
