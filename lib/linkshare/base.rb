@@ -49,7 +49,7 @@ module Linkshare
 
         unless validate_response(response)
           str = response.response.body #+ "1x1\t36342\tAdvertiser Y\t2163\t1/31/2002\t8:58\t32\t7.99\t1\t0.39\t2/1/2002\t12:46" #dummy data
-          str.gsub!(" ", "_").gsub!("($)", "").downcase!
+          str.gsub!(" \t","\t").gsub!("\t\n", "\n").gsub!(" ", "_").gsub!("($)", "").downcase!
           
           results = FasterCSV.parse(str, {:col_sep => "\t", :row_sep => "\n", :headers => true})
         end
@@ -59,11 +59,11 @@ module Linkshare
       
       def credentials
         unless @@credentials && @@credentials.length > 0
-          # there is no offline or test mode for LinkShare - so I won't include any credentials in this gem
+          # there is no offline or test mode for CJ - so I won't include any credentials in this gem
           config_file = ["config/linkshare.yml", File.join(ENV['HOME'], '.linkshare.yaml')].select{|f| File.exist?(f)}.first
 
           unless File.exist?(config_file)
-            warn "Warning: config/linkshare.yml does not exist. Put your LinkShare user_id and pass in ~/.linkshare.yml to enable live testing."
+            warn "Warning: config/linkshare.yaml does not exist. Put your CJ developer key and website ID in ~/.linkshare.yml to enable live testing."
           else
             @@credentials = YAML.load(File.read(config_file))
           end
