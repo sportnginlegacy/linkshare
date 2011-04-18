@@ -1,13 +1,18 @@
 linkshare
 
-LinkShare REST API interface
+LinkShare HTTP web service interface
 
 Currently you will need a ~/.linkshare.yml to use this.
 
 Retrieves data from LinkShare via HTTP web service and returns simple objects:
 
-[Examples]
+[Example]
 
     Linkshare::Commission.find("bdate" =>"20110401", "edate" => "20110415")
+
+[Example YAML]
+
+  user_id: test_user
+  pass: secure_password
 
 Methods accept the same parameters as the LinkShare API.
