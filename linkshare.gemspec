@@ -19,5 +19,5 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
   s.add_dependency(%q<httparty>)
-  s.add_dependency(%q<FasterCSV>)
+  s.add_dependency(%q<fastercsv>)
 end

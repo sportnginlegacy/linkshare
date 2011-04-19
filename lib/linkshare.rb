@@ -1,5 +1,5 @@
 require 'httparty'
-require 'FasterCSV'
+require 'fastercsv'
 
 directory = File.expand_path(File.dirname(__FILE__))
 require File.join(directory, "linkshare", "base")
