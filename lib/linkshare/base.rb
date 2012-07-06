@@ -51,7 +51,7 @@ module Linkshare
           str = response.body #+ "1x1\t36342\tAdvertiser Y\t2163\t1/31/2002\t8:58\t32\t7.99\t1\t0.39\t2/1/2002\t12:46" #dummy data
           str = str.gsub(" \t","\t").gsub("\t\n", "\n").gsub(" ", "_").gsub("($)", "").downcase!
           
-          results = FasterCSV.parse(str, {:col_sep => "\t", :row_sep => "\n", :headers => true})
+          results = CSV.parse(str, {:col_sep => "\t", :row_sep => "\n", :headers => true})
         end
 
         results.map{|r| self.new(r.to_hash)}
