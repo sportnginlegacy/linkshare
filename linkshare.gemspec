@@ -11,6 +11,7 @@ Gem::Specification.new do |s|
   s.homepage    = ""
   s.summary     = %q{Ruby gem to hit the Linkshare report api.}
   s.description = %q{Ruby gem to hit the Linkshare report api.}
+  s.license     = "MIT"
 
   s.rubyforge_project = "linkshare"
 
